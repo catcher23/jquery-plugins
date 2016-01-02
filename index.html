@@ -4,11 +4,14 @@
   <meta charset="utf-8" />
   <link rel="Stylesheet" href="css/jquery.nupoll.css"/>
   <link rel="Stylesheet" href="css/theme.css"/>
+  <link rel="Stylesheet" href="css/vacations.css"/>
 </head>
 <body>
-  <div id="mypoll"></div>
+  <!-- <div id="mypoll"></div> -->
+  <div id="vacations"></div>
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery.nupoll.js"></script>
+  <script src="js/jquery.vacations.js"></script>
   <script>
     $(function () {
       $("#mypoll").nupoll({
@@ -20,6 +23,10 @@
           }
         }
       });
+    });
+
+    $("#vacations").vacations({
+
     });
   </script>
 </body>
