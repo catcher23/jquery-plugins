@@ -2,12 +2,19 @@
 
   var defaults = {
     question: "Enter question here?",
-    url: "",
+    ajaxOptions: {
+      url: "",
+      type: "POST",
+      contentType: "application/json; charset=utf=8",
+      dataType: "json"
+    },
     buttonText: "Answer!",
     categories: ["A", "B", "C", "D"],
     containerClass: "nupoll",
     formClass: "nupoll-form",
-    buttonClass: "nupoll-submit"
+    buttonClass: "nupoll-submit",
+    errorMessage: "Thanks for your vote, unfortunately error",
+    errorClass: "nupoll-error-message"
   };
 
   function Nupoll(element, options) {
@@ -17,10 +24,43 @@
 
     widget.element.on("submit", function(e) {
       e.preventDefault();
+
+      var dataObj = {
+        data: JSON.stringify({selected:widget.element.find(":checked").val()})
+      };
+      ajaxSettings = $.extend(true, {}, widget.config.ajaxOptions, dataObj);
+
+
+
+      $.ajax(ajaxSettings).done(function(data) {
+        // consume data
+      }).fail(function(){
+        var returnVal = widget.element.triggerHandler("responseError.nupoll");
+
+        if(returnVal !== false) {
+          widget.element.append($("<p/>", {
+            text: widget.config.errorMessage,
+            "class": widget.config.errorClass
+          }));
+        }
+      });
+
+      widget.labels = widget.element.find("label");
+      widget.element.width(widget.element.width())
+      .height(widget.element.height()).find("form").remove();
+
+      widget.element.trigger("beforeResponse.nupoll");
     });
 
     widget.element.one("change", function(e) {
       widget.element.find("button").prop("disabled", false);
+    });
+    $.each(widget.config, function(key, val){
+      if(typeof val === "function") {
+        widget.element.on(key + ".nupoll", function() {
+            return val(widget.element);
+        });
+      }
     });
     this.init();
   }
@@ -54,8 +94,9 @@
       "class": this.config.buttonClass,
       disabled: "disabled"
     }).appendTo(form);
-  };
 
+    this.element.trigger("created.nupoll");
+  };
 
 
   $.fn.nupoll = function(options){

@@ -11,7 +11,15 @@
   <script src="js/jquery.nupoll.js"></script>
   <script>
     $(function () {
-      $("#mypoll").nupoll();
+      $("#mypoll").nupoll({
+        question: "What is your fav futbol player",
+        categories: ["Messi", "Ronaldo", "Neymar", "Lewandowski"],
+        ajaxOptions: {
+          headers: {
+            "X-REQUESTED_BY": "nupoll"
+          }
+        }
+      });
     });
   </script>
 </body>
