@@ -1,0 +1,7 @@
+.nupoll {padding:20px 40px 30px; float:left;}
+.nupoll h1 {margin:0 0 10px;}
+.nupoll form:after, .nupoll dl:after {content:""; display:block; height:0; visibility:hidden; clear:both;}
+.nupoll input, .nupoll label {display:block; margin-bottom: 10px; float:left;}
+.nupoll input, .nupoll-submit {display:block; clear:both;}
+.nupoll input {margin:5px 10px 1-px 0;}
+.nupoll-submit {margin-top:10px; float:left;}
